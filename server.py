@@ -31,7 +31,7 @@ app = Flask(__name__, template_folder=tmpl_dir)
 # 
 #     Enter info for whichever partner acct database is made under
 #
-DATABASEURI = "postgresql://cec2262:3293@34.75.94.195/proj1part2"
+DATABASEURI = "postgresql://cec2262:3293@35.185.53.165/proj1part2"
 
 
 #

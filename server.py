@@ -18,6 +18,7 @@ tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
 
+
 #
 # The following is a dummy URI that does not connect to a valid database. You will need to modify it to connect to your Part 2 database in order to use the data.
 #
@@ -162,9 +163,22 @@ def index():
 # Notice that the function name is another() rather than index()
 # The functions for each app.route need to have different names
 #
-@app.route('/another')
-def another():
-  return render_template("another.html")
+#This is the path for the Chefs page
+@app.route('/chefs')
+def chefs():
+  return render_template("chefs.html")
+
+
+#This is the path for the Recipes page
+@app.route('/recipes')
+def recipes():
+  return render_template("recipes.html")
+
+
+#This is the path for the profile page
+@app.route('/profile')
+def profile():
+  return render_template("profile.html")
 
 
 # Example of adding new data to the database

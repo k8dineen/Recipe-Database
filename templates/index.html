@@ -32,25 +32,59 @@
         background-color: hsl(0, 0%, 0%);
         color: white;
       }
+
+       /* styling search bar */
+       .search input[type=text]{
+            width:300px;
+            height:25px;
+            border-radius:25px;
+            border: none;
+            font-family: "Karma", sans-serif;
+        }
+        .search{
+            float: right;
+            margin:7px;
+        }
+       
+        .search button{
+            background-color: white;
+            color: black;
+            float: inline-end;
+            padding: 4px 6px;
+            margin-right: 20px;
+            font-size: 12px;
+            font-family: "Karma", sans-serif;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
   <div class="topnav">
-    <a class="active" href="index">Home</a>
+    <a class="active" href="/">Home</a>
     <p><a href="chefs">Chefs</a></p>
-    <p><a href="recipes">Recipes</a></p>
+    <p><a href = "recipes">Recipes</a></p>
     <p><a href="profile">Profile</a></p>
-  </div>
-  
-  <div style="padding-left:16px">
-    <h2>Welcome to our recipe database!</h2>
-    <p>Find your favorite meals, search for recipes by ingredients or look for famous chefs</p>
+
+    <div class="search">  
+      <form action="#">
+          <input type="text"
+              placeholder=" Search"
+              name="search">
+          <button type="submit">Submit</button>
+      </form>
+    </div>
   </div>
 
-  <form method="POST" action="/Search">
-    <p>Lookup ingredients, recipes, chefs: <input type="text" name="name"> <input type="submit" value="Add"></p>
-  </form>
+<div style="padding-left:16px">
+  <h2>Welcome to our recipe database!</h2>
+  <p>Find your favorite meals, search for recipes by ingredients or look for famous chefs</p>
+</div>
+
+<form method="POST" action="/Search">
+  <p>Lookup ingredients, recipes, chefs: <input type="text" name="name"> <input type="submit" value="Add"></p>
+</form>
 
 
 

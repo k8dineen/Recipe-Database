@@ -32,6 +32,32 @@
         background-color: hsl(0, 0%, 0%);
         color: white;
       }
+
+       /* styling search bar */
+       .search input[type=text]{
+            width:300px;
+            height:25px;
+            border-radius:25px;
+            border: none;
+            font-family: "Karma", sans-serif;
+        }
+        .search{
+            float:right;
+            margin:7px;
+ 
+        }
+       
+        .search button{
+            background-color: white;
+            color: black;
+            float: inline-end;
+            padding: 4px 6px;
+            margin-right: 20px;
+            font-size: 12px;
+            font-family: "Karma", sans-serif;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -41,4 +67,13 @@
     <a class="active" href="chefs">Chefs</a>
     <p><a href="recipes">Recipes</a></p>
     <p><a href="profile">Profile</a></p>
+
+    <div class="search">  
+      <form action="#">
+          <input type="text"
+              placeholder=" Search"
+              name="search">
+          <button type="submit">Submit</button</button>
+      </form>
+    </div>
   </div>

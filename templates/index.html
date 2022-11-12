@@ -1,64 +1,26 @@
 <html>
-<head>
-  <title>Our Recipe Project</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-    <style>
-      body{
-        margin: 0;
-        font-family: "Karma", sans-serif;
-      }
-      .topnav {
-        overflow: hidden;
-        background-color: rgb(106, 105, 105);
-      }
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+    
+    <!-- jquery -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="{{ url_for('static', filename = 'intro.js') }}"></script>
+  
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
 
-      .topnav a {
-        float: left;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 17px;
-      }
 
-      .topnav a:hover {
-        background-color: #ddd;
-        color: black;
-      }
+    <link rel="stylesheet" href="https://use.typekit.net/gzn6uaq.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
-      .topnav a.active {
-        background-color: hsl(0, 0%, 0%);
-        color: white;
-      }
+  </head>
 
-       /* styling search bar */
-       .search input[type=text]{
-            width:300px;
-            height:25px;
-            border-radius:25px;
-            border: none;
-            font-family: "Karma", sans-serif;
-        }
-        .search{
-            float: right;
-            margin:7px;
-        }
-       
-        .search button{
-            background-color: white;
-            color: black;
-            float: inline-end;
-            padding: 4px 6px;
-            margin-right: 20px;
-            font-size: 12px;
-            font-family: "Karma", sans-serif;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
+<title>Our Recipe Project</title>
 
 <body>
   <div class="topnav">

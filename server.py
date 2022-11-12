@@ -94,8 +94,11 @@ def teardown_request(exception):
 # see for routing: https://flask.palletsprojects.com/en/2.0.x/quickstart/?highlight=routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
-@app.route('/')
-def index():
+
+#####################################################################################################
+###
+        ##@app.route('/')##################
+        ##def index():#################3
   """
   request is a special object that Flask provides to access web request information:
 
@@ -108,17 +111,17 @@ def index():
   """
 
   # DEBUG: this is debugging code to see what request looks like
-  print(request.args)
+          ###print(request.args)#############
 
 
   #
   # example of a database query
   # %p and %s 
-  cursor = g.conn.execute("SELECT name FROM test")
-  names = []
-  for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
-  cursor.close()
+          ###cursor = g.conn.execute("SELECT name FROM test")###################3
+          ###names = []###################
+            ####for result in cursor:###############
+    ###names.append(result['name'])  # can also be accessed using result[0]#########33
+  ###cursor.close()#####
 
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
@@ -146,14 +149,14 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+        ###context = dict(data = names)##########3
 
 
   #
   # render_template looks in the templates/ folder for files.
   # for example, the below file reads template/index.html
   #
-  return render_template("index.html", **context)
+          ###return render_template("index.html", **context)###
 
 #
 # This is an example of a different path.  You can see it at:
@@ -163,20 +166,25 @@ def index():
 # Notice that the function name is another() rather than index()
 # The functions for each app.route need to have different names
 #
-#This is the path for the Chefs page
-@app.route('/chefs')
-def chefs():
-  return render_template("chefs.html")
 
+
+@app.route('/')
+def index():
+    return render_template("index.html")
+
+#This is the path for the Chefs page
+@app.route('/chefs/', methods=['GET','POST'])
+def chefs():
+    return render_template("chefs.html")
 
 #This is the path for the Recipes page
-@app.route('/recipes')
+@app.route('/recipes/', methods=['GET','POST'])
 def recipes():
   return render_template("recipes.html")
 
 
 #This is the path for the profile page
-@app.route('/profile')
+@app.route('/profile/', methods=['GET','POST'])
 def profile():
   return render_template("profile.html")
 
@@ -187,12 +195,6 @@ def add():
   name = request.form['name']
   g.conn.execute('INSERT INTO test(name) VALUES (%s)', name)
   return redirect('/')
-
-
-@app.route('/login')
-def login():
-    abort(401)
-    this_is_never_executed()
 
 
 if __name__ == "__main__":

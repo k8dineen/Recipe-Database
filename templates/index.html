@@ -23,32 +23,27 @@
 <title>Our Recipe Project</title>
 
 <body>
-  <div class="topnav">
-    <a class="active" href="/">Home</a>
-    <p><a href="chefs">Chefs</a></p>
-    <p><a href = "recipes">Recipes</a></p>
-    <p><a href="profile">Profile</a></p>
 
-    <div class="search">  
-      <form action="#">
-          <input type="text"
-              placeholder=" Search"
-              name="search">
-          <button type="submit">Submit</button>
-      </form>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <span style="padding-left: 20px" font-size="75px !important">RecipeDBMS</span>
+          </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/Chefs">Chefs</a>
+          <a class="nav-link" href="/Recipes">Recipes</a>
+          <a class="nav-link" href="/Profile">Profile</a>  
+          <input type="text" placeholder="Search">   
+        </div>
+      </div>
     </div>
-  </div>
-
-<div style="padding-left:16px">
-  <h2>Welcome to our recipe database!</h2>
-  <p>Find your favorite meals, search for recipes by ingredients or look for famous chefs</p>
-</div>
-
-<form method="POST" action="/Search">
-  <p>Lookup ingredients, recipes, chefs: <input type="text" name="name"> <input type="submit" value="Add"></p>
-</form>
-
-
+  </nav>
+  
 
 
 </body>

@@ -175,7 +175,13 @@ def index():
 #This is the path for the Chefs page
 @app.route('/chefs/', methods=['GET','POST'])
 def chefs():
-    return render_template("chefs.html")
+  cursor = g.conn.execute("SELECT * FROM chefs")
+  names = []
+  for result in cursor:
+    names.append(result['chef_name'])  # can also be accessed using result[0]#########33
+  cursor.close()
+
+  return render_template("chefs.html", names=names)
 
 #This is the path for the Recipes page
 @app.route('/recipes/', methods=['GET','POST'])

@@ -6,16 +6,41 @@
 
 {% block content %}
 
-<body>
-    <div class="search">  
-      <form action="#">
-          <input type="text"
-              placeholder=" Search"
-              name="search">
-          <button type="submit">Submit</button</button>
-      </form>
-    </div>
-  </div>
-</body>
+<style>
+  
+  td { 
+    font-size: 24;
+    width: 300px;
+    text-align: center;
+    padding: 5px;
+  }
+  th {
+    font-size: 36;
+    width: 300px;
+    text-align: center;
+    padding: 5px;
+  }
+  
+</style>
+<table>
+  <thead>
+    <tr>
+      <th>Recipe Title</th>
+      <th>Total Time</th>
+      <th>Difficulty</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in names %}
+      <tr>
+          <td>{{row[0]}}</td>
+          <td>{{row[1]}}</td>
+          <td>{{row[2]}}</td>
+      </tr>
+    
+      {% endfor %}
+
+  </tbody>
+</table>
 
 {% endblock %}

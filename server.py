@@ -71,7 +71,6 @@ def renderChef_id(chef_id=None):
   cursor = g.conn.execute("SELECT chef_id FROM chefs")
   chefInfo = chefs[chef_id]
   cursor.close()
-
   return render_template("chef_id.html", chefInfo=chefInfo)
 
 ###############      RECIPES ROUTE      ###############################################################################################
@@ -86,13 +85,23 @@ def recipes():
 
 
 
-
 ###############      PROFILE ROUTE      ###############################################################################################
 @app.route('/profile/', methods=['GET','POST'])
 def profile():
   return render_template("profile.html")
 
-
+@app.route('/add_user', methods =['GET', 'POST'])
+def adduser():
+  if request.method == 'POST':
+    if 'username' in request.form:
+      username = request.form["username"]
+    if 'firstname' in request.form:
+      first = request.form["firstname"]
+    if 'lastname' in request.form:
+      last = request.form["lastname"]
+    if 'email' in request.form:
+      email = request.form["email"]
+  return render_template("profile.html")
 
 
 ###############      ADD ROUTE      ###############################################################################################

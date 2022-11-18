@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+<script>
+    let chefInfo = {{chefInfo|tojson}};
+</script>
+
+<div>{{chefInfo.chef_id}}</div>
+<div>{{chefInfo.chef_name}}</div>
+<div>{{chefInfo.show}}</div>
+<div>{{chefInfo.followers}}</div>
+<div>{{chefInfo.posts}}</div>
+
+
+{% endblock %}

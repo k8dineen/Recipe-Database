@@ -21,7 +21,11 @@
     text-align: center;
     padding: 5px;
   }
-  
+  td[data-href]{
+    cursor: pointer;
+  }
+
+
 </style>
 <table>
   <thead>
@@ -35,7 +39,7 @@
   <tbody>
     {% for row in names %}
       <tr>
-          <td>{{row[0]}}</td>
+          <td data-href="/chefs/chef_id">{{row[0]}}</td>
           <td>{{row[1]}}</td>
           <td>{{row[2]}}</td>
           <td>{{row[3]}}</td>
@@ -46,7 +50,16 @@
   </tbody>
 </table>
 
+<script>
 
+
+$(document).ready(function () {
+  $(documment.body).on("click", "td[data-href]", function () {
+    window.location.href = this.document.href;
+  });
+});
+
+</script>
 
 {% endblock %}
 

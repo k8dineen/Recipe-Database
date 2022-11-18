@@ -6,21 +6,24 @@
 
 {% block content %}
 
+
 <body>
     <div class="search">  
       <form action="#">
-          <input type="text"
-              placeholder=" Search"
-              name="search">
-          <button type="submit">Submit</button</button>
+          
       </form>
     </div>
   </div>
 
   <p>If you're a new user, add your information for your profile below:</p>
-  <form method="POST" action="/Add">
-    <p>First name: <input type="text" name="name"> <input type="submit" value="Add"></p>
-    <p>Last name: <input type="text" name="name"> <input type="submit" value="Add"></p>
+
+  
+  <form action="/add_user" method="POST">
+    <p>Username: <input type="text" name="username"></p>
+    <p>First name: <input type="text" name="firstname"></p>
+    <p>Last name: <input type="text" name="lastname"></p>
+    <p>Email: <input type="text" name="email"></p>
+    <button type="submit">Submit</button>
   </form>
 
 

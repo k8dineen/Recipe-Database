@@ -13,5 +13,12 @@ go ahead and start adding the process of adding user data to the tables
 
 
 Kate: 
-I set up a form on Profiles that officially adds a user to the database, or at least so I think right now, no errors. Still working on trying to redirect the page to their profile after so they get add and delete things. Breaking to go home and pick it up a little later! 
+Made a login on the home page that will redirect the user to their profile and print out their information.
+If they are not logged in and they click Profile tab, it will keep them at the homepage until they login.
+Right now I think anyone can "login", if you try it without a user in our database it still brings you to their Profile
+and no information is there, so I need to work on that error.
+
+Then it has a new user form to add users to the database (no errors but I'm not sure if its actually adding someone to the database yet)
+I made the Chef names into a clickable link but haven't messed with what happens after that yet.
+Committing now just to have an updated version of everything but I'm going to keep working! 
 

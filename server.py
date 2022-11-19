@@ -3,11 +3,11 @@ import os
   # accessible as a variable in index.html:
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
-from flask import Flask, request, render_template, g, redirect, Response, url_for
+from flask import Flask, request, render_template, g, redirect, Response, url_for, session
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
-
+app.secret_key='secretkey'
 
 DATABASEURI = "postgresql://cec2262:3293@34.75.94.195/proj1part2"
 
@@ -30,7 +30,7 @@ engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'
 
 @app.before_request
 def before_request():
-  
+
   try:
     g.conn = engine.connect()
   except:
@@ -83,13 +83,43 @@ def recipes():
   return render_template("recipes.html", names=names)
 
 
-
-
 ###############      PROFILE ROUTE      ###############################################################################################
 @app.route('/profile/', methods=['GET','POST'])
 def profile():
-  return render_template("profile.html")
+  if not session.get("username"):
+    return redirect(url_for("index"))
+  else:
+    cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (session['username'],))
+    account = cursor.fetchone()
+    return render_template('profile.html', account=account)
 
+
+
+######## USER LOGIN #################################
+@app.route('/login_form', methods = ['POST','GET'])
+def login():
+  if request.method == 'POST':
+    session.pop('username', None)
+    username = request.form["username"]
+    email = request.form["email"]
+    cursor = g.conn.execute("SELECT * FROM users WHERE username='{username}' AND email='{email}'")
+    if cursor != null:
+      session['username']= username
+      return redirect(url_for('profile'))
+
+    return redirect(url_for('index'))
+
+  return render_template('profile.html')
+
+
+########### LOGOUT ##########################
+@app.route("/logout")
+def logout():
+  session["username"]=None
+  return redirect("/")
+
+
+######## NEW USER #################################
 @app.route('/add_user', methods =['GET', 'POST'])
 def adduser():
   if request.method == 'POST':
@@ -101,7 +131,7 @@ def adduser():
       last = request.form["lastname"]
     if 'email' in request.form:
       email = request.form["email"]
-  return render_template("profile.html")
+  return render_template("index.html")
 
 
 ###############      ADD ROUTE      ###############################################################################################

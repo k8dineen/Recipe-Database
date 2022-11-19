@@ -6,27 +6,33 @@
 
 {% block content %}
 
+<h2>Profile Page</h2>
+  {% if session.username %}
+    You are logged in {{session.username}} <a href="/logout">logout</a>.
+  {% else %}
+    You are not logged in. <a href="/login">login</a>.
+  {% endif %}
 
-<body>
-    <div class="search">  
-      <form action="#">
-          
-      </form>
-    </div>
-  </div>
-
-  <p>If you're a new user, add your information for your profile below:</p>
-
-  
-  <form action="/add_user" method="POST">
-    <p>Username: <input type="text" name="username"></p>
-    <p>First name: <input type="text" name="firstname"></p>
-    <p>Last name: <input type="text" name="lastname"></p>
-    <p>Email: <input type="text" name="email"></p>
-    <button type="submit">Submit</button>
-  </form>
-
-
-</body>
+<div>
+  <p>Your account details:</p>
+  <table>
+    <tr>
+        <td>Username:</td>
+        <td>{{ account['username'] }}</td>
+    </tr>
+    <tr>
+        <td>First:</td>
+        <td>{{ account['first_name'] }}</td>
+    </tr>
+    <tr>
+      <td>Last:</td>
+      <td>{{ account['last_name'] }}</td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td>{{ account['email'] }}</td>
+    </tr>
+</table>
+</div>
 
 {% endblock %}

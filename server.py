@@ -83,6 +83,15 @@ def recipes():
   return render_template("recipes.html", names=names)
 
 
+@app.route('/single-recipe/', methods=['GET','POST'])
+def recipeInfo(title):
+  cursor = g.conn.execute('SELECT * FROM recipes WHERE title = %s', (title))
+  info = cursor.fetchall()
+  cursor.close()
+  return render_template("single-repice.html", info=info)
+
+
+
 ###############      PROFILE ROUTE      ###############################################################################################
 @app.route('/profile/', methods=['GET','POST'])
 def profile():
@@ -98,7 +107,6 @@ def profile():
 ######## USER LOGIN #################################
 @app.route('/login_form', methods = ['POST','GET'])
 def login():
-  msg = ''
   if request.method == 'POST':
     session.pop('username', None)
     username = request.form['username']
@@ -109,9 +117,9 @@ def login():
       session['username']= username
       return redirect(url_for('profile'))
     else:
-      msg = "Invalid username"
       return redirect(url_for('index'))
-
+  
+  cursor.close()
   return render_template('profile.html')
 
 
@@ -125,24 +133,21 @@ def logout():
 ######## NEW USER #################################
 @app.route('/add_user', methods =['GET', 'POST'])
 def adduser():
-  msg = ''
   if request.method == 'POST' and 'username' in request.form:
       username = request.form["username"]
       first_name = request.form["first_name"]
       last_name = request.form["last_name"]
       email = request.form["email"]
       cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (username))
-      account = cursor.fetchone()
-      if account:
-        return render_template("/")
+      account = cursor.fetchall()
+      if len(account) > 0:
+        return render_template("index.html")
       else:
-        g.conn.execute("INSERT INTO users VALUES( %s, %s, %s, %s, NULL)", (username, first_name, last_name, email,))
-        cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (username))
-        account = cursor.fetchone()
-        if account:
-          session['username']= username
-          return redirect(url_for('profile'))
-
+        g.conn.execute('INSERT INTO users(username,first_name,last_name,email) VALUES(%s, %s, %s, %s)', (username, first_name, last_name, email))
+        cursor = g.conn.execute('SELECT * FROM users WHERE username=%s AND email=%s', (username, email))
+        session['username']= username
+        return redirect(url_for('profile'))
+  cursor.close()
   return render_template("index.html")
 
 

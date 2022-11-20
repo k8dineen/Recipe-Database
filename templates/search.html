@@ -1,0 +1,44 @@
+{% extends "index.html" %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<style>
+  
+    td { 
+      font-size: 20;
+      width: 150px;
+      text-align: center;
+      padding: 6px;
+    }
+    th {
+    font-size: 25;
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+  }
+  </style>
+
+<br/>
+<h2>Your Search Results .....</h2>
+
+{% if info != 0 %}
+<table id="demo">
+    <tbody>
+        {% for u in info %}
+        <tr style="height: 400px">
+            <td>{{ u[1] }}</td>
+            <td>{{ u[5] }}</td>
+            <td>{{ u[6] }}</td>
+            <td style="width: 700px">{{ u[7] }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+</table>
+{% else %}
+<h2>No search results.</h2>
+{% endif %}
+
+{% endblock %} 

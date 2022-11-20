@@ -14,11 +14,12 @@ go ahead and start adding the process of adding user data to the tables
 
 Kate: 
 Made a login on the home page that will redirect the user to their profile and print out their information.
-If they are not logged in and they click Profile tab, it will keep them at the homepage until they login.
-Right now I think anyone can "login", if you try it without a user in our database it still brings you to their Profile
-and no information is there, so I need to work on that error.
+If they are not in the database when you click login it just stays on the homepage, feel free to test that out, I just got that to work.
+If they are not logged in and they click the Profile tab, it will keep them at the homepage until they login.
+Then it has a new user form to add users to the database ---- This doesn't work yet, throwing Bad Request error. Will work on it later!!
 
-Then it has a new user form to add users to the database (no errors but I'm not sure if its actually adding someone to the database yet)
-I made the Chef names into a clickable link but haven't messed with what happens after that yet.
-Committing now just to have an updated version of everything but I'm going to keep working! 
+I made the Chef names into a clickable link but haven't messed with anything that happens after that yet.
+Need to do this with Recipes too still.
+
+Pausing for dinner! Will be back soon. 
 

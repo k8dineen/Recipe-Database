@@ -98,16 +98,19 @@ def profile():
 ######## USER LOGIN #################################
 @app.route('/login_form', methods = ['POST','GET'])
 def login():
+  msg = ''
   if request.method == 'POST':
     session.pop('username', None)
-    username = request.form["username"]
-    email = request.form["email"]
-    cursor = g.conn.execute("SELECT * FROM users WHERE username='{username}' AND email='{email}'")
-    if cursor != null:
+    username = request.form['username']
+    email = request.form['email']
+    cursor = g.conn.execute('SELECT * FROM users WHERE username=%s AND email=%s', (username, email))
+    account = cursor.fetchall()
+    if account:
       session['username']= username
       return redirect(url_for('profile'))
-
-    return redirect(url_for('index'))
+    else:
+      msg = "Invalid username"
+      return redirect(url_for('index'))
 
   return render_template('profile.html')
 
@@ -122,15 +125,24 @@ def logout():
 ######## NEW USER #################################
 @app.route('/add_user', methods =['GET', 'POST'])
 def adduser():
-  if request.method == 'POST':
-    if 'username' in request.form:
+  msg = ''
+  if request.method == 'POST' and 'username' in request.form:
       username = request.form["username"]
-    if 'firstname' in request.form:
-      first = request.form["firstname"]
-    if 'lastname' in request.form:
-      last = request.form["lastname"]
-    if 'email' in request.form:
+      first_name = request.form["first_name"]
+      last_name = request.form["last_name"]
       email = request.form["email"]
+      cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (username))
+      account = cursor.fetchone()
+      if account:
+        return render_template("/")
+      else:
+        g.conn.execute("INSERT INTO users VALUES( %s, %s, %s, %s, NULL)", (username, first_name, last_name, email,))
+        cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (username))
+        account = cursor.fetchone()
+        if account:
+          session['username']= username
+          return redirect(url_for('profile'))
+
   return render_template("index.html")
 
 

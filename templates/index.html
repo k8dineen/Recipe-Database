@@ -46,7 +46,7 @@
 
   <div class="a-container">
     {% block content %}
-    <p>Welcome to the home page!</p>
+    <h1>Welcome to the home page!</h1>
     
     <p>If you have an account, login below or browse as Guest.</p>
     <form action = "/login_form" method="POST">
@@ -62,8 +62,8 @@
     <p>To make a new account, enter the information below:</p>
     <form action="/add_user" method="POST">
       <p>Username: <input type="text" name="username"></p>
-      <p>First name: <input type="text" name="firstname"></p>
-      <p>Last name: <input type="text" name="lastname"></p>
+      <p>First name: <input type="text" name="first_name"></p>
+      <p>Last name: <input type="text" name="last_name"></p>
       <p>Email: <input type="text" name="email"></p>
       <button type="submit">Submit</button>
     </form>

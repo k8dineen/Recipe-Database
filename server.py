@@ -54,7 +54,6 @@ def index():
     return render_template("index.html")
 
 
-
 ###############      CHEFS ROUTE      ###############################################################################################
 @app.route('/chefs/', methods=['GET','POST'])
 def chefs():
@@ -83,15 +82,6 @@ def recipes():
   return render_template("recipes.html", names=names)
 
 
-@app.route('/single-recipe/', methods=['GET','POST'])
-def recipeInfo(title):
-  cursor = g.conn.execute('SELECT * FROM recipes WHERE title = %s', (title))
-  info = cursor.fetchall()
-  cursor.close()
-  return render_template("single-repice.html", info=info)
-
-
-
 ###############      PROFILE ROUTE      ###############################################################################################
 @app.route('/profile/', methods=['GET','POST'])
 def profile():
@@ -103,6 +93,25 @@ def profile():
     return render_template('profile.html', account=account)
 
 
+@app.route('/single_recipe')
+def single_recipe():
+  return render_template('/recipes/single_recipe.html')
+
+
+###### SEARCH FUNCTION ############
+@app.route('/search', methods=["GET", "POST"])
+def search():
+  if request.method == 'POST':
+    form = request.form
+    word = form['wordsearch']
+    search = "%{}%".format(word)
+    cursor = g.conn.execute('''
+    SELECT *
+    FROM recipes R
+    WHERE R.title LIKE %s''', (search))
+    info = cursor.fetchall()
+    return render_template('search.html', info=info)
+ 
 
 ######## USER LOGIN #################################
 @app.route('/login_form', methods = ['POST','GET'])

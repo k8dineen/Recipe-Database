@@ -57,23 +57,15 @@ def index():
 ###############      CHEFS ROUTE      ###############################################################################################
 @app.route('/chefs/', methods=['GET','POST'])
 def chefs():
-  cursor = g.conn.execute("SELECT chef_name, show, followers, posts FROM chefs")
+  cursor = g.conn.execute('''SELECT C.chef_name, C.show, S.cuisine_name, C.followers, C.posts
+  FROM chefs C, specializes_in S
+  WHERE C.chef_id = S.chef_id''')
   names = cursor.fetchall()
   cursor.close()
-
   return render_template("chefs.html", names= names)
 
 
-###############      CHEFS PAGE ROUTE      ###############################################################################################
-@app.route('/chefs/<chef_id>', methods=['GET','POST'])
-def renderChef_id(chef_id=None):
-  cursor = g.conn.execute("SELECT chef_id FROM chefs")
-  chefInfo = chefs[chef_id]
-  cursor.close()
-  return render_template("chef_id.html", chefInfo=chefInfo)
-
 ###############      RECIPES ROUTE      ###############################################################################################
-
 @app.route('/recipes/', methods=['GET','POST'])
 def recipes():
   cursor = g.conn.execute("SELECT title, total_time, difficulty FROM recipes")
@@ -90,12 +82,21 @@ def profile():
   else:
     cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (session['username'],))
     account = cursor.fetchone()
+    cursor.close()
     return render_template('profile.html', account=account)
 
 
-@app.route('/single_recipe')
+################## INDIVIDUAL RECIPES ####################################
+@app.route('/single_recipe', methods=["GET","POST"])
 def single_recipe():
-  return render_template('/recipes/single_recipe.html')
+  if request.method=='POST':
+    result = request.form.get('title')
+    cursor = g.conn.execute('SELECT * FROM recipes WHERE recipes.title = %s',(result))
+    info = cursor.fetchall()
+    cursor.close()
+    return render_template('single_recipe.html',info=info)
+
+  return render_template('single_recipe.html')
 
 
 ###### SEARCH FUNCTION ############
@@ -106,10 +107,11 @@ def search():
     word = form['wordsearch']
     search = "%{}%".format(word)
     cursor = g.conn.execute('''
-    SELECT DISTINCT recipes.title, includes.ingredient, includes.quantity, writes_reviews_about.rating, recipes.directions
-    FROM recipes, includes, labeled_as, writes_reviews_about
+    SELECT DISTINCT recipes.title, includes.ingredient, includes.quantity, recipes.directions
+    FROM recipes, includes, labeled_as
     WHERE includes.ingredient LIKE %s AND includes.recipe_id = recipes.recipe_id''', (search))
     info = cursor.fetchall()
+    cursor.close()
     return render_template('search.html', info=info)
  
 
@@ -138,6 +140,7 @@ def logout():
   session["username"]=None
   return redirect("/")
 
+
 ########### DELETE ############################
 @app.route("/delete")
 def delete():
@@ -160,12 +163,24 @@ def adduser():
       if len(account) > 0:
         return render_template("index.html")
       else:
-        g.conn.execute('INSERT INTO users(username,first_name,last_name,email) VALUES(%s, %s, %s, %s)', (username, first_name, last_name, email))
+        g.conn.execute('INSERT INTO users(username,first_name,last_name,email,favorites) VALUES(%s, %s, %s, %s, 0)', (username, first_name, last_name, email))
         cursor = g.conn.execute('SELECT * FROM users WHERE username=%s AND email=%s', (username, email))
         session['username']= username
         return redirect(url_for('profile'))
   cursor.close()
   return render_template("index.html")
+
+
+################ FAVORITES ##########################
+@app.route('/favorite', methods=['POST','GET'])
+def favorite():
+  username = session['username']
+  cursor = g.conn.execute('SELECT users.favorites FROM users WHERE users.username = %s', (username))
+  amount = len(cursor.fetchall())+1
+  g.conn.execute('''UPDATE users
+  SET favorites = %d
+  WHERE username = %s''',(amount, username))
+  return render_template("recipes.html")
 
 
 ###############      ADD ROUTE      ###############################################################################################

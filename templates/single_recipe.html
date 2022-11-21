@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+  
+  td { 
+    font-size: 22;
+    width: 300px;
+    text-align: center;
+    padding: 5px;
+  }
+  th {
+    font-size: 28;
+    width: 300px;
+    text-align: center;
+    padding: 5px;
+  }
+  .button{
+     color: black;
+     line-height: 12px;
+     width: 18px;
+     font-size: 8pt;
+     font-family: tahoma;
+     margin: 1px;
+     margin-left: 2px;
+     position:absolute;
+     top:0;
+     right:0;
+  }
+  
+  
+</style>
+<table>
+  <button><input action='/favorite' method="POST" name='button' id="button" type="button" value="Favorite" style="background-color: yellow"></button>
+  {% for col in info %}
+  <h1 style='text-align: center;'><strong>{{col[1]}}</strong></h1>
+  <thead>
+    <tr>
+      <th>Total Time</th>
+      <th>Prep Time</th>
+      <th>Cook Time</th>
+      <th>Difficulty</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>{{col[2]}}</td>
+          <td>{{col[3]}}</td>
+          <td>{{col[4]}}</td>
+          <td>{{col[5]}}</td>
+          <td>{{col[6]}}</td>
+      </tr>
+  </tbody>
+</table>
+<h3>Directions:</h3>
+<p>{{col[7]}}</p>
+  {% endfor %}
+<h3>Ingredients:</h3>
+<table>
+  <tbody>
+    <td></td>
+  </tbody>
+</table>
+
+
+{% endblock %}

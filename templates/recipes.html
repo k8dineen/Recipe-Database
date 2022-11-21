@@ -25,19 +25,24 @@
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Recipe Title</th>
       <th>Total Time</th>
       <th>Difficulty</th>
     </tr>
   </thead>
   <tbody>
-    {% for row in names %}
+    {% for col in names %}
       <tr>
-          <td>{{row[0]}}</td>
-          <td>{{row[1]}}</td>
-          <td>{{row[2]}}</td>
+            <form action = '/single_recipe' method = 'POST'>
+              <td input id="title"></td>
+              <input type="hidden" value="{{col[0]}}" name = "title">
+              <td><button type = 'submit'>{{col[0]}}</button></td>
+            </form>
+          <td>{{col[1]}}</td>
+          <td>{{col[2]}}</td>
       </tr>
-      {% endfor %}
+    {% endfor %}
   </tbody>
 </table>
 

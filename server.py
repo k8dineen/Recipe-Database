@@ -74,17 +74,39 @@ def recipes():
   return render_template("recipes.html", names=names)
 
 
-################## INDIVIDUAL RECIPES ####################################
+################## INDIVIDUAL RECIPES VALUES ####################################
 @app.route('/single_recipe', methods=["GET","POST"])
 def single_recipe():
   if request.method=='POST':
     result = request.form.get('title')
     cursor = g.conn.execute('SELECT * FROM recipes WHERE recipes.title = %s',(result))
     info = cursor.fetchall()
+    cursor = g.conn.execute('''SELECT I.ingredient, I.brand, I.quantity
+    FROM includes I, recipes R
+    WHERE I.recipe_id = R.recipe_id AND R.title = %s''',(result))
+    igList = cursor.fetchall()
+    cursor = g.conn.execute('''SELECT *
+    FROM writes_reviews_about W, recipes R
+    WHERE W.recipe_id = R.recipe_id AND R.title = %s''',(result))
+    reviews = cursor.fetchall()
+    cursor = g.conn.execute('''SELECT L.cuisine_name
+    FROM labeled_as L, recipes R
+    WHERE L.recipe_id = R.recipe_id AND R.title = %s''',(result))
+    tabs = cursor.fetchall()
     cursor.close()
-    return render_template('single_recipe.html',info=info)
+    return render_template('single_recipe.html',info=info, igList=igList, reviews=reviews, tabs=tabs)
 
   return render_template('single_recipe.html')
+
+##################### UPDATE LIKE #####################################
+@app.route('/updateLike', methods=['GET','POST'])
+def updateLike():
+  result = request.form.get('like')
+  g.conn.execute('''UPDATE writes_reviews_about
+  SET likes = likes+1
+  WHERE review_num = %s''', (result))
+  return redirect(url_for('recipes'))
+
 
 
 ################# ADD RECIPE #################################
@@ -120,8 +142,12 @@ def profile():
   else:
     cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (session['username'],))
     account = cursor.fetchone()
+    cursor = g.conn.execute('''SELECT R.title
+    FROM recipes R, owner O
+    WHERE R.recipe_id = O.recipe_id AND O.username = %s''',(session['username']))
+    posts = cursor.fetchall()
     cursor.close()
-    return render_template('profile.html', account=account)
+    return render_template('profile.html', account=account, posts=posts)
 
 
 ########################### SEARCH FUNCTION ##############################
@@ -130,11 +156,12 @@ def search():
   if request.method == 'POST':
     form = request.form
     word = form['wordsearch']
+    word = word.lower()
     search = "%{}%".format(word)
     cursor = g.conn.execute('''
     SELECT DISTINCT recipes.title, includes.ingredient, includes.quantity, recipes.directions
     FROM recipes, includes, labeled_as
-    WHERE includes.ingredient LIKE %s AND includes.recipe_id = recipes.recipe_id''', (search))
+    WHERE lower(includes.ingredient) LIKE %s AND includes.recipe_id = recipes.recipe_id''', (search))
     info = cursor.fetchall()
     cursor.close()
     return render_template('search.html', info=info)

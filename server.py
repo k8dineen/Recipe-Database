@@ -106,9 +106,9 @@ def search():
     word = form['wordsearch']
     search = "%{}%".format(word)
     cursor = g.conn.execute('''
-    SELECT *
-    FROM recipes R
-    WHERE R.title LIKE %s''', (search))
+    SELECT DISTINCT recipes.title, includes.ingredient, includes.quantity, writes_reviews_about.rating, recipes.directions
+    FROM recipes, includes, labeled_as, writes_reviews_about
+    WHERE includes.ingredient LIKE %s AND includes.recipe_id = recipes.recipe_id''', (search))
     info = cursor.fetchall()
     return render_template('search.html', info=info)
  
@@ -135,6 +135,14 @@ def login():
 ########### LOGOUT ##########################
 @app.route("/logout")
 def logout():
+  session["username"]=None
+  return redirect("/")
+
+########### DELETE ############################
+@app.route("/delete")
+def delete():
+  username = session["username"]
+  g.conn.execute('DELETE FROM users WHERE users.username=%s', (username))
   session["username"]=None
   return redirect("/")
 

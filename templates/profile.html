@@ -41,15 +41,26 @@
       <td>{{ account['favorites'] }}</td>
     </tr>
     <tr>
-      <td><p>Posts:</p></td>
-      {% for recipe in posts %}
-      <form action = '/single_recipe' method = 'POST'>
-        <td input id="title"></td>
-        <input type="hidden" value="{{recipe[0]}}" name = "title">
-        <td><button style='margin-left: -100px;' type = 'submit'>{{recipe[0]}}</button></td>
-      </form>
+      <td><p>My Recipes:</p></td>
+      <table>
+        {% for recipe in posts %}
+        <tr>
+        <form action = '/single_recipe' method = 'POST'>
+          <td input id="title"></td>
+          <input type="hidden" value="{{recipe[0]}}" name = "title">
+          <td><button type = 'submit'>{{recipe[0]}}</button></td>
+        </form>
+        </tr>
+        <tr>
+            <form action = '/deleteRecipe' method = 'POST'>
+              <td input id="recipe"></td>
+              <input type="hidden" value="{{recipe[0]}}" name = "recipe">
+              <td><button style="background-color:red" type = 'submit'>Delete Recipe</button></td>
+            </form>
+        </tr>
+          {% endfor %}
+      </table>
     </tr>
-      {% endfor %}
 </table>
 </div>
 

@@ -124,6 +124,22 @@ def profile():
     return render_template('profile.html', account=account)
 
 
+########################### SEARCH FUNCTION ##############################
+@app.route('/search', methods=["GET", "POST"])
+def search():
+  if request.method == 'POST':
+    form = request.form
+    word = form['wordsearch']
+    search = "%{}%".format(word)
+    cursor = g.conn.execute('''
+    SELECT DISTINCT recipes.title, includes.ingredient, includes.quantity, recipes.directions
+    FROM recipes, includes, labeled_as
+    WHERE includes.ingredient LIKE %s AND includes.recipe_id = recipes.recipe_id''', (search))
+    info = cursor.fetchall()
+    cursor.close()
+    return render_template('search.html', info=info)
+
+
 ########################## USER LOGIN #######################################################
 @app.route('/login_form', methods = ['POST','GET'])
 def login():

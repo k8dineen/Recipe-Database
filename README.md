@@ -1,17 +1,4 @@
 # 4111-proj1 Part 3
-
-Okay, so the layout for all the HTML files are taken care of. It's basic as 
-hell, but it will get the job done. Also, just for cleanliness, I added two 
-files into the static folder: index.css and intro.js. I've added the CSS all to
-the static file and put the import statement into the index.html file. This 
-just makes each subsequent HTML file a lot cleaner. I have not added JS yet, 
-as things could probably stay pretty basic right now. 
-
-The next step that I need to take is to connect to the DBMS and display the 
-results from the database. Once I figure out how I do that, then I will 
-go ahead and start adding the process of adding user data to the tables 
-
-
 Kate: 
 Made a login on the home page that will redirect the user to their profile and print out their information.
 If they are not in the database when you click login it just stays on the homepage
@@ -33,6 +20,13 @@ I've spent so long trying to figure out how to make a new page pop up full of a 
 
 
 
+Chris:
+I have spent far too long working on a redirect and I need a new approach. It seems after looking through multiple 
+resources, I should look at changing the redirects from a clickable link to a form. I'm going to try and add a 
+button to each database row that allows the user to click and hopefully to a new HTML page. After that, to display
+a user profile page, I will most likely just add a search box where the user will just have to type in the name
+of the profile they would like to visit. Hopefully using forms will make it easier. 
 
+-For this push, I am going to merge with main to establish a point where I can pull from if I need to start over
 
 

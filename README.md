@@ -1,19 +1,18 @@
 # 4111-proj1 Part 3
-Kate: 
+
 -Login on the home page that will redirect the user to their profile and print out their information.
 -If they are not in the database when you click login it just stays on the homepage.
--If they are not logged in and they click the Profile tab, it will keep them at the homepage until they login.
+-If they are not logged in and they click the Profile tab, it will keep them at the homepage until they login
 -New user form to add users to the database. If you try to add a user with the same a repeated user name
 it just redirects to the homepage again. 
 -Search bar allows user to search for recipes by ingredients. Displaying recipe information on search.html
--Once logged in, user has the option to log out or delete their account.
--Single recipe page working! Changed all the recipe titles on recipes.html to be buttons. When you click on 
-them, a new html opens with all there information. 
+-Once logged in, user has the option to log out or delete their account
+-Recipe page lists all recipes in database, linking them to a new page that displays all their info
+-Users have option to add a recipes to their favorites, increasing that database value
+-Add recipe button allows users to add recipes to datbase
 
 TODO:
--Still need to list all ingredients/amount, reviews/rating
--Favorite button in place but not updating users yet. 
--Need a button on recipes.html "add new recipe" that has a form for a user to add a new recipe into data base
+-Still need to list all ingredients/amount, reviews/rating 
 
 I chose to just ditch the idea of clicking on a Chefs name because we never mention doing any work with chefs
 in our original document so I think for times sake we should skip that. I just printed out all their info instead.

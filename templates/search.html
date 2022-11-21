@@ -27,6 +27,7 @@
 {% if info != 0 %}
 <table id="demo">
     <thead style="height: 100px">
+        <th></th>
         <th>Recipe</th>
         <th>Ingredient</th>
         <th>Amount</th>
@@ -35,7 +36,11 @@
     <tbody>
         {% for u in info %}
         <tr style ='height:200px'>
-            <td>{{ u[0] }}</td>
+          <form action = '/single_recipe' method = 'POST'>
+            <td input id="title"></td>
+            <input type="hidden" value="{{u[0]}}" name = "title">
+            <td><button style='margin-left: -100px;' type = 'submit'>{{u[0]}}</button></td>
+          </form>
             <td>{{ u[1] }}</td>
             <td>{{ u[2] }}</td>
             <td style="width: 700px">{{ u[3] }}</td>

@@ -98,6 +98,7 @@ def single_recipe():
 
   return render_template('single_recipe.html')
 
+
 ##################### UPDATE LIKE #####################################
 @app.route('/updateLike', methods=['GET','POST'])
 def updateLike():
@@ -133,6 +134,7 @@ def addRecipe():
 def movePage():
   if request.method=='POST':
     return render_template('addRecipe.html')
+
 
 #####################    PROFILE ROUTE      #######################################################################
 @app.route('/profile/', methods=['GET','POST'])

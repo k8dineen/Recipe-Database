@@ -42,7 +42,7 @@
       <button type="submit" name="submit" value="submit">Add to Favorites</button>
     </form>
   </div>
-  {% for col in info %}
+{% for col in info %}
   <h1 style='text-align: center;'><strong>{{col[1]}}</strong></h1>
   <thead>
     <tr>
@@ -63,15 +63,63 @@
       </tr>
   </tbody>
 </table>
+<br/>
 <h3>Directions:</h3>
 <p>{{col[7]}}</p>
-  {% endfor %}
-<h3>Ingredients:</h3>
+{% endfor %}
+<br/>
 <table>
+  <thead>
+    <tr>
+      <th>Ingredient</th>
+      <th>Brand</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
   <tbody>
-    <td></td>
+    {% for item in igList %}
+    <tr>
+      <td>{{ item[0] }}</td>
+      <td>{{ item[1] }}</td>
+      <td>{{ item[2] }}</td>
+    </tr>
+    {% endfor %}
   </tbody>
 </table>
+<br/>
+<table>
+  <thead>
+    <tr>
+      <th>Review #</th>
+      <th>Rating</th>
+      <th>Date</th>
+      <th>Review</th>
+      <th>User</th>
+      <th>Likes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for x in reviews %}
+    <tr>
+      <td>{{ x[0] }}</td>
+      <td>{{ x[1] }}</td>
+      <td>{{ x[3] }}</td>
+      <td>{{ x[4] }}</td>
+      <td>{{ x[6] }}</td>
+      <td>{{ x[2] }}</td>
+      <td>
+        <form action="/updateLike" id='like' method="POST">
+          <input type="hidden" value="{{x[0]}}" name = "like">
+        <button style="background: yellow;color:black;" onclick="alert('Comment Liked')">Like</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br/>
+<br/>
+<br/>
 
 
 {% endblock %}

@@ -6,16 +6,15 @@
 -New user form to add users to the database. If you try to add a user with the same a repeated user name
 it just redirects to the homepage again. 
 -Search bar allows user to search for recipes by ingredients. Displaying recipe information on search.html
+    -changes both user input and database values to lower() to search for anything with those letters
 -Once logged in, user has the option to log out or delete their account
 -Recipe page lists all recipes in database, linking them to a new page that displays all their info
+-Lists out ingredients, brand, and amount
+-Displays all the reviews and ratings
 -Users have option to add a recipes to their favorites, increasing that database value
+-Users can like individual reviews, updating the page and amount of likes
 -Add recipe button allows users to add recipes to datbase
 
-TODO:
--Still need to list all ingredients/amount, reviews/rating 
-
-I chose to just ditch the idea of clicking on a Chefs name because we never mention doing any work with chefs
-in our original document so I think for times sake we should skip that. I just printed out all their info instead.
 
 
 

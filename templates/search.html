@@ -26,16 +26,24 @@
 
 {% if info != 0 %}
 <table id="demo">
+    <thead style="height: 100px">
+        <th>Recipe</th>
+        <th>Ingredient</th>
+        <th>Amount</th>
+        <th>Rating</th>
+        <th>Directions</th>
+    </thead>
     <tbody>
         {% for u in info %}
-        <tr style="height: 400px">
+        <tr style ='height:200px'>
+            <td>{{ u[0] }}</td>
             <td>{{ u[1] }}</td>
-            <td>{{ u[5] }}</td>
-            <td>{{ u[6] }}</td>
-            <td style="width: 700px">{{ u[7] }}</td>
+            <td>{{ u[2] }}</td>
+            <td>{{ u[3] }}</td>
+            <td style="width: 700px">{{ u[4] }}</td>
         </tr>
         {% endfor %}
-        </tbody>
+    </tbody>
 </table>
 {% else %}
 <h2>No search results.</h2>

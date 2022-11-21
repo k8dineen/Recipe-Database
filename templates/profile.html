@@ -8,7 +8,11 @@
 
 <h2>Profile Page</h2>
   {% if session.username %}
-    You are logged in {{session.username}} <a href="/logout">logout</a>.
+    <p>You are logged in {{session.username}}</p>
+    <p><a href="/logout">logout</a></p>
+    <form action = "/delete" method="POST">
+      <p><a href="/delete">delete account</a></p>
+    </form>
   {% else %}
     You are not logged in. <a href="/login">login</a>.
   {% endif %}

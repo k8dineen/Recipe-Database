@@ -46,15 +46,15 @@ def teardown_request(exception):
   except Exception as e:
     pass
 
-#####################################################################################################################################
+######################################################################################################################
 
-###############      INDEX ROUTE      ###############################################################################################
+###############      INDEX ROUTE      ################################################################################
 @app.route('/')
 def index():
     return render_template("index.html")
 
 
-###############      CHEFS ROUTE      ###############################################################################################
+###############      CHEFS ROUTE      ###############################################################################
 @app.route('/chefs/', methods=['GET','POST'])
 def chefs():
   cursor = g.conn.execute('''SELECT C.chef_name, C.show, S.cuisine_name, C.followers, C.posts
@@ -65,25 +65,13 @@ def chefs():
   return render_template("chefs.html", names= names)
 
 
-###############      RECIPES ROUTE      ###############################################################################################
+###############      RECIPES ROUTE      ###############################################################################
 @app.route('/recipes/', methods=['GET','POST'])
 def recipes():
   cursor = g.conn.execute("SELECT title, total_time, difficulty FROM recipes")
   names = cursor.fetchall()
   cursor.close()
   return render_template("recipes.html", names=names)
-
-
-###############      PROFILE ROUTE      ###############################################################################################
-@app.route('/profile/', methods=['GET','POST'])
-def profile():
-  if not session.get("username"):
-    return redirect(url_for("index"))
-  else:
-    cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (session['username'],))
-    account = cursor.fetchone()
-    cursor.close()
-    return render_template('profile.html', account=account)
 
 
 ################## INDIVIDUAL RECIPES ####################################
@@ -99,23 +87,44 @@ def single_recipe():
   return render_template('single_recipe.html')
 
 
-###### SEARCH FUNCTION ############
-@app.route('/search', methods=["GET", "POST"])
-def search():
+################# ADD RECIPE #################################
+@app.route('/addRecipe', methods=['GET','POST'])
+def addRecipe():
+  num = 10
+  num = str(num+1)
+  print(num)
   if request.method == 'POST':
-    form = request.form
-    word = form['wordsearch']
-    search = "%{}%".format(word)
-    cursor = g.conn.execute('''
-    SELECT DISTINCT recipes.title, includes.ingredient, includes.quantity, recipes.directions
-    FROM recipes, includes, labeled_as
-    WHERE includes.ingredient LIKE %s AND includes.recipe_id = recipes.recipe_id''', (search))
-    info = cursor.fetchall()
-    cursor.close()
-    return render_template('search.html', info=info)
- 
+      title = request.form['title']
+      total_time = request.form['total_time']
+      prep_time = request.form['prep_time']
+      cook_time = request.form['cook_time']
+      difficulty = request.form['difficulty']
+      method = request.form['method']
+      directions = request.form['directions']
+      g.conn.execute('''INSERT INTO recipes(recipe_id, title, total_time, prep_time, cook_time, difficulty, method, directions)
+      VALUES(%s, %s, %s, %s, %s, %s, %s, %s)''', (num, title, total_time, prep_time, cook_time, difficulty, method, directions))
+      return redirect(url_for('recipes'))
+  return redirect(url_for('recipes'))
 
-######## USER LOGIN #################################
+  
+@app.route('/movePage', methods=['POST'])
+def movePage():
+  if request.method=='POST':
+    return render_template('addRecipe.html')
+
+#####################    PROFILE ROUTE      #######################################################################
+@app.route('/profile/', methods=['GET','POST'])
+def profile():
+  if not session.get("username"):
+    return redirect(url_for("index"))
+  else:
+    cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (session['username'],))
+    account = cursor.fetchone()
+    cursor.close()
+    return render_template('profile.html', account=account)
+
+
+########################## USER LOGIN #######################################################
 @app.route('/login_form', methods = ['POST','GET'])
 def login():
   if request.method == 'POST':
@@ -134,14 +143,14 @@ def login():
   return render_template('profile.html')
 
 
-########### LOGOUT ##########################
+################################# LOGOUT ##########################
 @app.route("/logout")
 def logout():
   session["username"]=None
   return redirect("/")
 
 
-########### DELETE ############################
+################################# DELETE ############################
 @app.route("/delete")
 def delete():
   username = session["username"]
@@ -150,7 +159,7 @@ def delete():
   return redirect("/")
 
 
-######## NEW USER #################################
+############################### NEW USER #################################
 @app.route('/add_user', methods =['GET', 'POST'])
 def adduser():
   if request.method == 'POST' and 'username' in request.form:
@@ -163,7 +172,8 @@ def adduser():
       if len(account) > 0:
         return render_template("index.html")
       else:
-        g.conn.execute('INSERT INTO users(username,first_name,last_name,email,favorites) VALUES(%s, %s, %s, %s, 0)', (username, first_name, last_name, email))
+        g.conn.execute('''INSERT INTO users(username,first_name,last_name,email,favorites)
+        VALUES(%s, %s, %s, %s, 0)''', (username, first_name, last_name, email))
         cursor = g.conn.execute('SELECT * FROM users WHERE username=%s AND email=%s', (username, email))
         session['username']= username
         return redirect(url_for('profile'))
@@ -171,19 +181,20 @@ def adduser():
   return render_template("index.html")
 
 
-################ FAVORITES ##########################
+################ FAVORITES UPDATE ##########################
 @app.route('/favorite', methods=['POST','GET'])
 def favorite():
-  username = session['username']
-  cursor = g.conn.execute('SELECT users.favorites FROM users WHERE users.username = %s', (username))
-  amount = len(cursor.fetchall())+1
-  g.conn.execute('''UPDATE users
-  SET favorites = %d
-  WHERE username = %s''',(amount, username))
-  return render_template("recipes.html")
+  checked = 'check' in request.form
+  if checked:
+    username = session['username']
+    g.conn.execute('''UPDATE users
+    SET favorites = favorites+1
+    WHERE username = %s''',(username))
+    return redirect(url_for('recipes'))
+  return render_template('index.html')
 
 
-###############      ADD ROUTE      ###############################################################################################
+###############      ADD ROUTE      ###############################################################
 @app.route('/add', methods=['POST'])
 def add():
   name = request.form['name']

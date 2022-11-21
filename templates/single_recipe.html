@@ -36,7 +36,12 @@
   
 </style>
 <table>
-  <button><input action='/favorite' method="POST" name='button' id="button" type="button" value="Favorite" style="background-color: yellow"></button>
+  <div class="container"><br>
+    <form action='/favorite' method="POST">
+      <input type="checkbox" name="check">
+      <button type="submit" name="submit" value="submit">Add to Favorites</button>
+    </form>
+  </div>
   {% for col in info %}
   <h1 style='text-align: center;'><strong>{{col[1]}}</strong></h1>
   <thead>

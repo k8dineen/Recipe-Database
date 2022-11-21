@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+<p>To add a new recipe, enter the information below:</p>
+    <form action="/addRecipe" method="POST">
+      <p>Title: <input type="text" name="title"></p>
+      <p>Total Time: <input type="text" name="total_time"></p>
+      <p>Prep Time: <input type="text" name="prep_time"></p>
+      <p>Cook Time: <input type='text' name ='cook_time'></p>
+      <p>Difficulty: <input type="text" name="difficulty"></p>
+      <p>Method: <input type="text" name="method"></p>
+      <p>Directions: <input type="text" name="directions"></p>
+
+      <button type="submit">Submit</button>
+    </form>
+
+
+
+
+
+
+{% endblock %}

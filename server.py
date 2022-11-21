@@ -158,12 +158,41 @@ def addRecipe():
     g.conn.execute('''INSERT INTO owner(recipe_id, username) VALUES(%s, %s)''', (num, username))
     return redirect(url_for('recipes'))
 
+
+@app.route('/addComment', methods=['GET','POST'])
+def addComment():
+  num = 5000
+  num = str(num+1)
+  print(num)
+  recipe = request.form.get("recipes")
+  if not session.get("username"):
+    return redirect(url_for("index"))
+  else:
+	  if request.method == 'POST':
+      username = request.form['username']
+      likes = request.form['likes']
+      rating = request.form['rating']
+      date = request.form['date']
+     	comment = request.form['comment']
+      g.conn.execute('''INSERT INTO writes_reviews_about(review_num, rating, likes, date, comment, recipe_id, username)
+                        VALUES(%s, %s, %s, %s, %s, %s, %s)''',   (num, rating, likes, date, comment, recipe_id, username))                
+         return redirect(url_for('single_recipe'))
+  return redirect(url_for('single_recipe'))
+
+  
+  if not session.get("username"):
+      return redirect(url_for("index"))
+
   
 @app.route('/movePage', methods=['POST'])
 def movePage():
   if request.method=='POST':
     return render_template('addRecipe.html')
 
+@app.route('/newComment', methods=['POST'])
+def newComment():
+  if request.method=='POST':
+    return render_template('addComment.html')
 
 ##############################     PROFILE ROUTE    #####################################################################
 @app.route('/profile/', methods=['GET','POST'])

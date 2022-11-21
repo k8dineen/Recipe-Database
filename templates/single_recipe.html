@@ -44,6 +44,11 @@
   </div>
 {% for col in info %}
   <h1 style='text-align: center;'><strong>{{col[1]}}</strong></h1>
+  {% for x in tabs %}
+  <h4 style="text-align: center;">{{x[0]}}</h4>
+  {% endfor %}
+  <br/>
+  <br/>
   <thead>
     <tr>
       <th>Total Time</th>

@@ -89,8 +89,12 @@ def single_recipe():
     FROM writes_reviews_about W, recipes R
     WHERE W.recipe_id = R.recipe_id AND R.title = %s''',(result))
     reviews = cursor.fetchall()
+    cursor = g.conn.execute('''SELECT L.cuisine_name
+    FROM labeled_as L, recipes R
+    WHERE L.recipe_id = R.recipe_id AND R.title = %s''',(result))
+    tabs = cursor.fetchall()
     cursor.close()
-    return render_template('single_recipe.html',info=info, igList=igList, reviews=reviews)
+    return render_template('single_recipe.html',info=info, igList=igList, reviews=reviews, tabs=tabs)
 
   return render_template('single_recipe.html')
 
@@ -138,8 +142,12 @@ def profile():
   else:
     cursor = g.conn.execute('SELECT * FROM users WHERE username=%s', (session['username'],))
     account = cursor.fetchone()
+    cursor = g.conn.execute('''SELECT R.title
+    FROM recipes R, owner O
+    WHERE R.recipe_id = O.recipe_id AND O.username = %s''',(session['username']))
+    posts = cursor.fetchall()
     cursor.close()
-    return render_template('profile.html', account=account)
+    return render_template('profile.html', account=account, posts=posts)
 
 
 ########################### SEARCH FUNCTION ##############################

@@ -42,6 +42,7 @@
       <button type="submit" name="submit" value="submit">Add to Favorites</button>
     </form>
   </div>
+
 {% for col in info %}
   <h1 style='text-align: center;'><strong>{{col[1]}}</strong></h1>
   {% for x in tabs %}
@@ -121,6 +122,9 @@
     </tr>
     {% endfor %}
   </tbody>
+  {% for col in info %}
+  <tr><th style="font-size: 20px;"><form action="/movePage2" method="POST"><input type='hidden' value ='{{col[0]}}' name = 'recName'><button type="submit">Add New Comment</button></form></th></tr>
+  {% endfor %}
 </table>
 <br>
 <th style="font-size: 20px;"><form action="/newComment" method="POST"><button type="submit">Add New Comment</button></form></th>

@@ -8,14 +8,13 @@
 {% block content %}
 
 <p>To add a comment, enter the information below:</p>
-    <form action="/addComment" method="POST">
-      <p>Rating: <input type="text" name="rating"></p>
-      <p>Date: <input type="text" name="date"></p>
-      <p>Comment: <textarea type="text" name="comment" rows="14" cols="=20" wrap="soft"></textarea></p>
-      {% for col in info %}
-      <p>Username: <input type="text" name="username"></p>
-      <button type="submit">Submit</button>
-    </form>
 
-    {% endfor %}
+    <form action="/addComment" method="POST">
+          <p>Rating: <input type="text" name="rating"></p>
+          <p>Date: <input type="text" name="date"></p>
+          <p>Review: <textarea type="text" name="comment" rows="14" cols="=20" wrap="soft"></textarea></p>
+          <p>Username:<input type='text' name = 'username'></p>
+          <input type='hidden' value ='{{recName}}' name ='title'>
+          <button type="submit">Submit</button>
+    </form>
 {% endblock %}

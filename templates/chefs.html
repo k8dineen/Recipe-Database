@@ -27,26 +27,27 @@
 
 
 </style>
-<table>
+<table border=1 frame=void rules=rows>
   <thead>
     <tr>
       <th>Chef</th>
-      <th>Show</th>
+      <th style="width:30%">Shows</th>
       <th>Specialty</th>
       <th>Followers</th>
-      <th>Posts</th>
     </tr>
   </thead>
   <tbody>
     {% for row in names %}
       <tr>
           <td>{{row[0]}}</td>
-          <td>{{row[1]}}</td>
+          <td>
+            {% for show in row[1] %}
+            <p>{{show}}</p>
+            {% endfor %}
+          </td>
           <td>{{row[2]}}</td>
           <td>{{row[3]}}</td>
-          <td>{{row[4]}}</td>
       </tr>
-    
       {% endfor %}
 
   </tbody>

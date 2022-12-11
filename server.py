@@ -9,7 +9,7 @@ tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 app.secret_key='secretkey'
 
-DATABASEURI = "postgresql://cec2262:3293@34.75.94.195/proj1part2"
+DATABASEURI = "postgresql://krd2141:6952@34.75.94.195/proj1part2"
 
 
 #
@@ -57,7 +57,7 @@ def index():
 ########################      CHEFS ROUTE      ########################################################################
 @app.route('/chefs/', methods=['GET','POST'])
 def chefs():
-  cursor = g.conn.execute('''SELECT C.chef_name, C.show, S.cuisine_name, C.followers, C.posts
+  cursor = g.conn.execute('''SELECT C.chef_name, C.shows, S.cuisine_name, C.followers
   FROM chefs C, specializes_in S
   WHERE C.chef_id = S.chef_id''')
   names = cursor.fetchall()

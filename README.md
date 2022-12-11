@@ -1,4 +1,4 @@
-# 4111-proj1 Part 3
+# 4111-project
 
 PostgreSQL account: cec2262
 

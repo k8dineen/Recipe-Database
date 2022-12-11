@@ -36,7 +36,7 @@
 </style>
 <table>
   <thead>
-    <tr>
+    <tr style="border-bottom: 1px solid black">
       <th style="font-size: 20px;"><form action="/movePage" method="POST"><button type="submit">Add New Recipe</button></form></th>
       <th>Recipe Title</th>
       <th>Total Time</th>
@@ -51,7 +51,7 @@
               <input type="hidden" value="{{col[0]}}" name = "title">
               <td><button type = 'submit'>{{col[0]}}</button></td>
             </form>
-          <td>{{col[1]}}</td>
+          <td>{{col[1]}} Minutes</td>
           <td>{{col[2]}}</td>
       </tr>
     {% endfor %}

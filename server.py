@@ -158,7 +158,6 @@ def addRecipe():
     g.conn.execute('''INSERT INTO owner(recipe_id, username) VALUES(%s, %s)''', (num, username))
     return redirect(url_for('recipes'))
 
-  
 @app.route('/movePage', methods=['POST'])
 def movePage():
   if request.method=='POST':

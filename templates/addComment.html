@@ -6,6 +6,7 @@
 
 
 {% block content %}
+
 <p>To add a comment, enter the information below:</p>
 
     <form action="/addComment" method="POST">
@@ -16,5 +17,4 @@
           <input type='hidden' value ='{{recName}}' name ='title'>
           <button type="submit">Submit</button>
     </form>
-
 {% endblock %}
